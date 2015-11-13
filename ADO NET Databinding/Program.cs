@@ -15,7 +15,7 @@ namespace ADO_NET_Databinding
             //ADO.Net DATA BINDING
             //data binding model
             //Synchronized
-
         }
+
     }
 }

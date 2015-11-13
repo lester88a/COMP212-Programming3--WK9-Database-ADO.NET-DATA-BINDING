@@ -90,6 +90,46 @@ namespace ADO_NET_Databinding
             relateOrderOrderDetails = new DataRelation("RelOrderOrdDetails", colmaster2, colDetail2);
             dataSet.Relations.Add(relateOrderOrderDetails);
 
+
+            //asign the detault view manage from dataset to dsView
+            dataViewManager = dataSet.DefaultViewManager;
+
+            //grid data binding
+            grdOrder.DataSource = dataViewManager;
+            grdOrder.DataMember = "Customers.RelCustomerOrder.RelOrderOrdDetails";
+
+            //combobox
+            cbCust.DataSource = dataViewManager;
+            cbCust.DisplayMember = "Customers.CompanyName";
+            cbCust.ValueMember = "Customers.CustomerID";
+
+            //txtbox binding
+            txtContact.DataBindings.Add("Text", dataViewManager, "Customers.ContactName");
+            txtPhone.DataBindings.Add("Text", dataViewManager, "Customers.Phone");
+            txtFax.DataBindings.Add("Text", dataViewManager, "Customers.Fax");
+
+            
+            
+        }
+        //click event for button
+        private void buttonPre_Click(object sender, EventArgs e)
+        {
+            //check if in the first position
+            if (this.BindingContext[dataViewManager, "Customers"].Position > 0)
+            {
+                this.BindingContext[dataViewManager, "Customers"].Position--; //decreament by 1
+            }
+        }
+
+        private void buttonNext_Click(object sender, EventArgs e)
+        {
+            //check if in the last position, then you move
+            CurrencyManager currencyManager = (CurrencyManager)this.BindingContext[dataViewManager, "Customers"];
+            if (currencyManager.Position < currencyManager.Count - 1) 
+            {
+                currencyManager.Position++;
+            }
+
         }
     }
 }
